@@ -1,12 +1,14 @@
 import React from "react";
 import "./App.css";
-import SwitchComponent from "./components/SwitchComponent";
+import FormEntryComponent from "./components/FormEntryComponent";
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <SwitchComponent />
+    <div className="App container mx-auto">
+      <p className="mt-5 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-5">
+        BAC Calculator
+      </p>
+      <FormEntryComponent />
     </div>
   );
 }
