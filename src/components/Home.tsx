@@ -23,6 +23,12 @@ const FormEntryComponent = () => {
     const date = new Date();
     const newHours = date.getHours();
     const newMinutes = date.getMinutes();
+    if (newMinutes < 10) {
+      let currentTime = `${newHours} : 0${newMinutes}`;
+      const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
+      arr.push(myObjInstance);
+      return;
+    }
     let currentTime = `${newHours} : ${newMinutes}`;
     const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
     arr.push(myObjInstance);
@@ -33,6 +39,12 @@ const FormEntryComponent = () => {
     const date = new Date();
     const newHours = date.getHours();
     const newMinutes = date.getMinutes();
+    if (newMinutes < 10) {
+      let currentTime = `${newHours} : 0${newMinutes}`;
+      const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
+      arr.push(myObjInstance);
+      return;
+    }
     let currentTime = `${newHours} : ${newMinutes}`;
     const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
     arr.push(myObjInstance);
@@ -43,6 +55,12 @@ const FormEntryComponent = () => {
     const date = new Date();
     const newHours = date.getHours();
     const newMinutes = date.getMinutes();
+    if (newMinutes < 10) {
+      let currentTime = `${newHours} : 0${newMinutes}`;
+      const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
+      arr.push(myObjInstance);
+      return;
+    }
     let currentTime = `${newHours} : ${newMinutes}`;
     const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
     arr.push(myObjInstance);
