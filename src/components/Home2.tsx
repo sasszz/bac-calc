@@ -82,13 +82,38 @@ const FormEntryComponent = () => {
 
   return (
     <div>
-      <p>BAC: {bac.toFixed(3)}</p>
-      <p>Num Drinks: {drinks - 1}</p>
-      <p>Hours Elapsed: {timeElapsed.toFixed(2)}</p>
-      <p>Time Until Under 0.08 BAC: {timeUntilEight.toFixed(1)} hours</p>
-      <p>
-        Total Grams of Alcohol Consumed: {totalGramsOfAlcohol.toFixed(0)} grams
-      </p>
+      <div className="w-full max-w-lg container mx-auto mt-6">
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-1/2 pb-1/2 bg-purple-300 mb-2 p-6">
+            <p className="text-white font-bold text-2xl">{bac.toFixed(3)}</p>
+            <p className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              BAC
+            </p>
+          </div>
+          <div className="w-1/2 pb-1/2 bg-purple-300 mb-2 p-6">
+            <p className="text-white font-bold text-2xl">{drinks - 1}</p>
+            <p className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Drink Count
+            </p>
+          </div>
+          <div className="w-1/2 pb-1/2 bg-purple-300 mb-2 p-6">
+            <p className="text-white font-bold text-2xl">
+              {timeElapsed.toFixed(2)}
+            </p>
+            <p className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Hours Elapsed
+            </p>
+          </div>
+          <div className="w-1/2 pb-1/2 bg-purple-300 mb-2 p-6">
+            <p className="text-white font-bold text-2xl">
+              {timeUntilEight.toFixed(1)}
+            </p>
+            <p className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Hours Until Under 0.08 BAC
+            </p>
+          </div>
+        </div>
+      </div>
       <form className="w-full max-w-lg container mx-auto mt-6">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3">
@@ -162,7 +187,7 @@ const FormEntryComponent = () => {
           </div>
           <div className="w-full md:w-1/3 px-3">
             <button
-              className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded uppercase"
+              className="bg-purple-300 hover:bg-purple-200 uppercase tracking-wide text-gray-700 text-xs font-bold py-2 px-4 border-purple-500 hover:border-purple-400 rounded mt-6"
               onClick={handleDrink}
               type="button"
             >
@@ -177,8 +202,8 @@ const FormEntryComponent = () => {
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
               <div className="overflow-hidden">
                 <table className="min-w-full text-left text-sm font-light">
-                  <thead className="border-b font-medium dark:border-neutral-500">
-                    <tr>
+                  <thead className="border-b font-medium dark:border-neutral-500 bg-purple-300">
+                    <tr className="uppercase tracking-wide text-gray-700 text-xs font-bold">
                       <th scope="col" className="px-6 py-4">
                         Time
                       </th>

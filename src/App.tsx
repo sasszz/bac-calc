@@ -6,7 +6,7 @@ import Home2 from "./components/Home2";
 function App() {
   return (
     <div className="App container mx-auto">
-      <p className="mt-5 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-5">
+      <p className="mt-10 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-5">
         BAC Calculator
       </p>
       <Home2 />
