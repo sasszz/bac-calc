@@ -3,6 +3,7 @@ import ListBoxComponent from "./ListBoxComponent";
 import Beer from "./assets/beer.png";
 import Wine from "./assets/wine.png";
 import Shot from "./assets/shot.png";
+import { ObjectType } from "typescript";
 
 const FormEntryComponent = () => {
   const [drinksArray, setDrinksArray] = useState<string[]>([]);
@@ -12,9 +13,11 @@ const FormEntryComponent = () => {
   // const [currentTimeArray, setCurrentTimeArray] = useState<object[]>([]);
   const [currentTimeArray, setCurrentTimeArray] = useState<string[]>([]);
   const [currentTime, setCurrentTime] = useState({});
+  const [arr, setArr] = useState<object[]>([]);
 
-  let latestDrink;
-  let newTime;
+  let newTime: string;
+  let latestDrink: string;
+  let nameAgeMapping = new Map<string, string>();
 
   const handleDrink = () => {
     setDrinks(drinks + 1);
@@ -24,20 +27,20 @@ const FormEntryComponent = () => {
     const date = new Date();
     const newHours = date.getHours();
     const newMinutes = date.getMinutes();
-    // let currentTime: { hours: number; minutes: number };
-    // currentTime = {
-    //   hours: newHours,
-    //   minutes: newMinutes,
-    // };
     let currentTime = `${newHours} : ${newMinutes}`;
     return currentTime;
   };
 
   const handleBeer = () => {
     setDrinks(drinks + 1);
-    drinksArray.push("Beer");
-    pushCurrentTime();
-    console.log(drinksArray, currentTimeArray);
+    latestDrink = "Beer";
+    const date = new Date();
+    const newHours = date.getHours();
+    const newMinutes = date.getMinutes();
+    let currentTime = `${newHours} : ${newMinutes}`;
+    nameAgeMapping.set(currentTime, latestDrink);
+    arr.push(nameAgeMapping);
+    console.log(arr);
   };
 
   const pushCurrentTime = () => {
@@ -50,6 +53,8 @@ const FormEntryComponent = () => {
     { time: { hours: 17, minutes: 15 }, drink: "Wine" },
     { time: { hours: 17, minutes: 17 }, drink: "Shot" },
   ];
+
+  let arr1;
 
   return (
     <div>
@@ -134,7 +139,6 @@ const FormEntryComponent = () => {
             >
               Get Current Time
             </button>
-            <p>{newTime}</p>
           </div>
         </div>
       </form>
@@ -154,18 +158,17 @@ const FormEntryComponent = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b dark:border-neutral-500">
-                    {currentTimeArray.map((time) => {
-                      return (
-                        <td className="whitespace-nowrap px-6 py-4">{time}</td>
-                      );
-                    })}
-                    {drinksArray.map((drink) => {
-                      return (
-                        <td className="whitespace-nowrap px-6 py-4">{drink}</td>
-                      );
-                    })}
-                  </tr>
+                  {arr.map((entry, idx) => {
+                    return (
+                      <tr
+                        className="border-b dark:border-neutral-500"
+                        key={idx}
+                      >
+                        <td className="whitespace-nowrap px-6 py-4">{idx}</td>
+                        <td className="whitespace-nowrap px-6 py-4">{}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
