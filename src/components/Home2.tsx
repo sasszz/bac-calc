@@ -14,6 +14,9 @@ const FormEntryComponent = () => {
   let [initialMinutes, setInitialMinutes] = useState<number>(0);
   let [timeElapsed, setTimeElapsed] = useState<number>(0);
   let [timeUntilEight, setTimeUntilEight] = useState<number>(0);
+  let [fluidOunces, setFluidOunces] = useState<number>(0);
+  let [totalGramsOfAlcohol, setTotalGramsOfAlcohol] = useState<number>(0);
+  let [abv, setAbv] = useState<number>(0);
   const [arr, setArr] = useState<object[]>([]);
 
   let latestDrink: string;
@@ -22,9 +25,9 @@ const FormEntryComponent = () => {
     drink: string;
   }
 
-  const handleBeer = () => {
+  const handleDrink = () => {
     BACCalculator();
-    latestDrink = "Beer";
+    latestDrink = `${fluidOunces} fluid ounces at ${abv}% ABV`;
     const date = new Date();
     const newHours = date.getHours();
     const newMinutes = date.getMinutes();
@@ -47,54 +50,13 @@ const FormEntryComponent = () => {
     arr.push(myObjInstance);
   };
 
-  const handleWine = () => {
-    BACCalculator();
-    latestDrink = "Wine";
-    const date = new Date();
-    const newHours = date.getHours();
-    const newMinutes = date.getMinutes();
-    if (drinks == 1) {
-      setInitialHours(newHours);
-      setInitialMinutes(newMinutes);
-    }
-    if (newMinutes < 10) {
-      let currentTime = `${newHours} : 0${newMinutes}`;
-      const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
-      arr.push(myObjInstance);
-      return;
-    }
-    let currentTime = `${newHours} : ${newMinutes}`;
-    const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
-    arr.push(myObjInstance);
-  };
-
-  const handleShot = () => {
-    BACCalculator();
-    latestDrink = "Shot";
-    const date = new Date();
-    const newHours = date.getHours();
-    const newMinutes = date.getMinutes();
-    if (drinks == 1) {
-      setInitialHours(newHours);
-      setInitialMinutes(newMinutes);
-    }
-    if (newMinutes < 10) {
-      let currentTime = `${newHours} : 0${newMinutes}`;
-      const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
-      arr.push(myObjInstance);
-      return;
-    }
-    let currentTime = `${newHours} : ${newMinutes}`;
-    const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
-    arr.push(myObjInstance);
-  };
-
   const BACCalculator = () => {
     let genderConst: number;
     let weightConst: number;
     let bacCalculated;
     let bacFinalCalculated;
     let timeUntilEightCalculated;
+    let calculatedGramsOfAlcohol;
     setDrinks(drinks + 1);
     if (gender === "female") {
       genderConst = 0.55;
@@ -104,8 +66,12 @@ const FormEntryComponent = () => {
       genderConst = 0.62;
     }
     weightConst = weight * 454;
-    let gramsOfAlcohol = drinks * 14;
-    bacCalculated = (gramsOfAlcohol / (weightConst * genderConst)) * 100;
+    const gramsOfAlcohol = fluidOunces * 29.5753 * (abv / 100) * 0.789;
+    console.log(gramsOfAlcohol);
+    calculatedGramsOfAlcohol = gramsOfAlcohol + totalGramsOfAlcohol;
+    setTotalGramsOfAlcohol(calculatedGramsOfAlcohol);
+    bacCalculated =
+      (calculatedGramsOfAlcohol / (weightConst * genderConst)) * 100;
     bacFinalCalculated = bacCalculated - timeElapsed * 0.015;
     if (bacFinalCalculated >= 0.08) {
       timeUntilEightCalculated = (bacFinalCalculated - 0.079) / 0.015;
@@ -114,12 +80,18 @@ const FormEntryComponent = () => {
     setBac(bacFinalCalculated);
   };
 
+  console.log(fluidOunces);
+  console.log(abv);
+
   return (
     <div>
       <p>BAC: {bac.toFixed(3)}</p>
       <p>Num Drinks: {drinks - 1}</p>
-      <p>Hours Elapsed: {timeElapsed}</p>
+      <p>Hours Elapsed: {timeElapsed.toFixed(2)}</p>
       <p>Time Until Under 0.08 BAC: {timeUntilEight.toFixed(1)} hours</p>
+      <p>
+        Total Grams of Alcohol Consumed: {totalGramsOfAlcohol.toFixed(0)} grams
+      </p>
       <form className="w-full max-w-lg container mx-auto mt-6">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3">
@@ -163,69 +135,80 @@ const FormEntryComponent = () => {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/3 px-3">
-            <button
-              className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-              type="button"
-              onClick={handleBeer}
-            >
-              <img src={Beer} alt="Beer" />
-            </button>
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Fluid Oz
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              name="FlOz"
+              id="FlOz"
+              type="number"
+              placeholder="12"
+              onChange={(e) => setFluidOunces(e.target.valueAsNumber)}
+            />
+          </div>
+          <div className="w-full md:w-1/3 px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              ABV
+            </label>
+            <div className="flex flex-row">
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                name="ABV"
+                id="ABV"
+                type="number"
+                placeholder="5"
+                onChange={(e) => setAbv(e.target.valueAsNumber)}
+              />
+              <p> %</p>
+            </div>
           </div>
           <div className="w-full md:w-1/3 px-3">
             <button
-              className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+              className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded uppercase"
+              onClick={handleDrink}
               type="button"
-              onClick={handleWine}
             >
-              {" "}
-              <img src={Wine} alt="Wine" />
-            </button>
-          </div>
-          <div className="w-full md:w-1/3 px-3">
-            <button
-              className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-              type="button"
-              onClick={handleShot}
-            >
-              {" "}
-              <img src={Shot} alt="Shot" />
+              Calculate BAC
             </button>
           </div>
         </div>
       </form>
-      <div className="flex flex-col">
-        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-            <div className="overflow-hidden">
-              <table className="min-w-full text-left text-sm font-light">
-                <thead className="border-b font-medium dark:border-neutral-500">
-                  <tr>
-                    <th scope="col" className="px-6 py-4">
-                      Time
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Drink
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {arr.map((entry: any, idx) => {
-                    return (
-                      <tr
-                        className="border-b dark:border-neutral-500"
-                        key={idx}
-                      >
-                        <td className="whitespace-nowrap px-6 py-4">
-                          {entry.time}
-                        </td>
-                        <td className="whitespace-nowrap px-6 py-4">
-                          {entry.drink}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+      <div className="w-full max-w-lg container mx-auto mt-6">
+        <div className="flex flex-col">
+          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+              <div className="overflow-hidden">
+                <table className="min-w-full text-left text-sm font-light">
+                  <thead className="border-b font-medium dark:border-neutral-500">
+                    <tr>
+                      <th scope="col" className="px-6 py-4">
+                        Time
+                      </th>
+                      <th scope="col" className="px-6 py-4">
+                        Drink
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {arr.map((entry: any, idx) => {
+                      return (
+                        <tr
+                          className="border-b dark:border-neutral-500"
+                          key={idx}
+                        >
+                          <td className="whitespace-nowrap px-6 py-4">
+                            {entry.time}
+                          </td>
+                          <td className="whitespace-nowrap px-6 py-4">
+                            {entry.drink}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
