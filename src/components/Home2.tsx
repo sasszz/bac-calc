@@ -78,11 +78,7 @@ const FormEntryComponent = () => {
       setTimeUntilEight(timeUntilEightCalculated);
     }
     setBac(bacFinalCalculated);
-    // new comment
   };
-
-  console.log(fluidOunces);
-  console.log("Hello");
 
   return (
     <div>
