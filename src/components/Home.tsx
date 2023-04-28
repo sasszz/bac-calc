@@ -8,7 +8,12 @@ import { ObjectType } from "typescript";
 const FormEntryComponent = () => {
   const [weight, setWeight] = useState(140);
   const [gender, setGender] = useState("female");
-  const [drinks, setDrinks] = useState(0);
+  const [drinks, setDrinks] = useState(1);
+  let [bac, setBac] = useState(0);
+  let [initialHours, setInitialHours] = useState<number>(0);
+  let [initialMinutes, setInitialMinutes] = useState<number>(0);
+  let [timeElapsed, setTimeElapsed] = useState<number>(0);
+  let [timeUntilEight, setTimeUntilEight] = useState<number>(0);
   const [arr, setArr] = useState<object[]>([]);
 
   let latestDrink: string;
@@ -18,43 +23,19 @@ const FormEntryComponent = () => {
   }
 
   const handleBeer = () => {
-    setDrinks(drinks + 1);
+    BACCalculator();
     latestDrink = "Beer";
     const date = new Date();
     const newHours = date.getHours();
     const newMinutes = date.getMinutes();
-    if (newMinutes < 10) {
-      let currentTime = `${newHours} : 0${newMinutes}`;
-      const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
-      arr.push(myObjInstance);
-      return;
+    if (drinks == 1) {
+      setInitialHours(newHours);
+      setInitialMinutes(newMinutes);
+    } else {
+      let minutesElapsed = newMinutes - initialMinutes;
+      let hoursElapsed = newHours - initialHours + minutesElapsed / 60;
+      setTimeElapsed(hoursElapsed);
     }
-    let currentTime = `${newHours} : ${newMinutes}`;
-    const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
-    arr.push(myObjInstance);
-  };
-  const handleWine = () => {
-    setDrinks(drinks + 1);
-    latestDrink = "Wine";
-    const date = new Date();
-    const newHours = date.getHours();
-    const newMinutes = date.getMinutes();
-    if (newMinutes < 10) {
-      let currentTime = `${newHours} : 0${newMinutes}`;
-      const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
-      arr.push(myObjInstance);
-      return;
-    }
-    let currentTime = `${newHours} : ${newMinutes}`;
-    const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
-    arr.push(myObjInstance);
-  };
-  const handleShot = () => {
-    setDrinks(drinks + 1);
-    latestDrink = "Shot";
-    const date = new Date();
-    const newHours = date.getHours();
-    const newMinutes = date.getMinutes();
     if (newMinutes < 10) {
       let currentTime = `${newHours} : 0${newMinutes}`;
       const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
@@ -66,8 +47,83 @@ const FormEntryComponent = () => {
     arr.push(myObjInstance);
   };
 
+  const handleWine = () => {
+    BACCalculator();
+    latestDrink = "Wine";
+    const date = new Date();
+    const newHours = date.getHours();
+    const newMinutes = date.getMinutes();
+    if (drinks == 1) {
+      setInitialHours(newHours);
+      setInitialMinutes(newMinutes);
+    }
+    if (newMinutes < 10) {
+      let currentTime = `${newHours} : 0${newMinutes}`;
+      const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
+      arr.push(myObjInstance);
+      return;
+    }
+    let currentTime = `${newHours} : ${newMinutes}`;
+    const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
+    arr.push(myObjInstance);
+  };
+
+  const handleShot = () => {
+    BACCalculator();
+    latestDrink = "Shot";
+    const date = new Date();
+    const newHours = date.getHours();
+    const newMinutes = date.getMinutes();
+    if (drinks == 1) {
+      setInitialHours(newHours);
+      setInitialMinutes(newMinutes);
+    }
+    if (newMinutes < 10) {
+      let currentTime = `${newHours} : 0${newMinutes}`;
+      const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
+      arr.push(myObjInstance);
+      return;
+    }
+    let currentTime = `${newHours} : ${newMinutes}`;
+    const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
+    arr.push(myObjInstance);
+  };
+
+  const BACCalculator = () => {
+    let genderConst: number;
+    let weightConst: number;
+    let bacCalculated;
+    let bacFinalCalculated;
+    let timeUntilEightCalculated;
+    setDrinks(drinks + 1);
+    if (gender === "female") {
+      genderConst = 0.55;
+    } else if (gender === "male") {
+      genderConst = 0.68;
+    } else {
+      genderConst = 0.62;
+    }
+    weightConst = weight * 454;
+    let gramsOfAlcohol = drinks * 14;
+    bacCalculated = (gramsOfAlcohol / (weightConst * genderConst)) * 100;
+    bacFinalCalculated = bacCalculated - timeElapsed * 0.015;
+    if (bacFinalCalculated >= 0.08) {
+      timeUntilEightCalculated = (bacFinalCalculated - 0.079) / 0.015;
+      setTimeUntilEight(timeUntilEightCalculated);
+    }
+    setBac(bacFinalCalculated);
+  };
+
   return (
     <div>
+      <p>BAC: {bac}</p>
+      <p>Num Drinks: {drinks - 1}</p>
+      <p>
+        {" "}
+        Drinking Session Began at {initialHours} : {initialMinutes}
+      </p>
+      <p>Hours Elapsed: {timeElapsed}</p>
+      <p>Time Until Under 0.08 BAC: {timeUntilEight} hours</p>
       <form className="w-full max-w-lg container mx-auto">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3">
