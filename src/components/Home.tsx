@@ -6,34 +6,16 @@ import Shot from "./assets/shot.png";
 import { ObjectType } from "typescript";
 
 const FormEntryComponent = () => {
-  const [drinksArray, setDrinksArray] = useState<string[]>([]);
   const [weight, setWeight] = useState(140);
   const [gender, setGender] = useState("female");
   const [drinks, setDrinks] = useState(0);
-  // const [currentTimeArray, setCurrentTimeArray] = useState<object[]>([]);
-  const [currentTimeArray, setCurrentTimeArray] = useState<string[]>([]);
-  const [currentTime, setCurrentTime] = useState({});
   const [arr, setArr] = useState<object[]>([]);
 
-  let newTime: string;
   let latestDrink: string;
   interface myObj {
     time?: string;
     drink: string;
   }
-  // let obj: { time: string; drink: string };
-
-  const handleDrink = () => {
-    setDrinks(drinks + 1);
-  };
-
-  const getCurrentTime = () => {
-    const date = new Date();
-    const newHours = date.getHours();
-    const newMinutes = date.getMinutes();
-    let currentTime = `${newHours} : ${newMinutes}`;
-    return currentTime;
-  };
 
   const handleBeer = () => {
     setDrinks(drinks + 1);
@@ -44,21 +26,27 @@ const FormEntryComponent = () => {
     let currentTime = `${newHours} : ${newMinutes}`;
     const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
     arr.push(myObjInstance);
-    console.log(arr);
   };
-
-  const pushCurrentTime = () => {
-    let newTime = getCurrentTime();
-    currentTimeArray.push(newTime);
+  const handleWine = () => {
+    setDrinks(drinks + 1);
+    latestDrink = "Wine";
+    const date = new Date();
+    const newHours = date.getHours();
+    const newMinutes = date.getMinutes();
+    let currentTime = `${newHours} : ${newMinutes}`;
+    const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
+    arr.push(myObjInstance);
   };
-
-  const drinkTrackerTable = [
-    { time: { hours: 17, minutes: 14 }, drink: "Beer" },
-    { time: { hours: 17, minutes: 15 }, drink: "Wine" },
-    { time: { hours: 17, minutes: 17 }, drink: "Shot" },
-  ];
-
-  let arr1;
+  const handleShot = () => {
+    setDrinks(drinks + 1);
+    latestDrink = "Shot";
+    const date = new Date();
+    const newHours = date.getHours();
+    const newMinutes = date.getMinutes();
+    let currentTime = `${newHours} : ${newMinutes}`;
+    const myObjInstance: myObj = { time: currentTime, drink: latestDrink };
+    arr.push(myObjInstance);
+  };
 
   return (
     <div>
@@ -117,7 +105,7 @@ const FormEntryComponent = () => {
             <button
               className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="button"
-              onClick={handleDrink}
+              onClick={handleWine}
             >
               {" "}
               <img src={Wine} alt="Wine" />
@@ -127,21 +115,10 @@ const FormEntryComponent = () => {
             <button
               className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="button"
-              onClick={handleDrink}
+              onClick={handleShot}
             >
               {" "}
               <img src={Shot} alt="Shot" />
-            </button>
-          </div>
-        </div>
-        <div className="flex flex-wrap -mx-3 mb-2">
-          <div className="w-full px-3">
-            <button
-              className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-              type="button"
-              onClick={pushCurrentTime}
-            >
-              Get Current Time
             </button>
           </div>
         </div>
@@ -162,14 +139,18 @@ const FormEntryComponent = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {arr.map((entry, idx) => {
+                  {arr.map((entry: any, idx) => {
                     return (
                       <tr
                         className="border-b dark:border-neutral-500"
                         key={idx}
                       >
-                        <td className="whitespace-nowrap px-6 py-4">{idx}</td>
-                        <td className="whitespace-nowrap px-6 py-4"></td>
+                        <td className="whitespace-nowrap px-6 py-4">
+                          {entry.time}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4">
+                          {entry.drink}
+                        </td>
                       </tr>
                     );
                   })}
