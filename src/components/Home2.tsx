@@ -81,7 +81,7 @@ const FormEntryComponent = () => {
   };
 
   return (
-    <div>
+    <div className="p-2">
       <div className="w-full max-w-lg container mx-auto mt-6">
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-1/2 pb-1/2 bg-purple-300 mb-2 p-6">
@@ -121,7 +121,7 @@ const FormEntryComponent = () => {
               Weight
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="mb-2 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               name="weight"
               id="weight"
               type="number"
@@ -135,7 +135,7 @@ const FormEntryComponent = () => {
             </label>
             <div className="relative">
               <select
-                className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block mb-2 appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 name="gender"
                 onChange={(e) => setGender(e.target.value)}
               >
@@ -161,7 +161,7 @@ const FormEntryComponent = () => {
               Fluid Oz
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="mb-2 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               name="FlOz"
               id="FlOz"
               type="number"
@@ -175,7 +175,7 @@ const FormEntryComponent = () => {
             </label>
             <div className="flex flex-row">
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="mb-2 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 name="ABV"
                 id="ABV"
                 type="number"
@@ -196,7 +196,7 @@ const FormEntryComponent = () => {
           </div>
         </div>
       </form>
-      <div className="w-full max-w-lg container mx-auto mt-6">
+      <div className="w-full max-w-lg container mx-auto mt-6 mb-10">
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -235,6 +235,7 @@ const FormEntryComponent = () => {
           </div>
         </div>
       </div>
+      <div className="mt-10">Made by Lucie</div>
     </div>
   );
 };

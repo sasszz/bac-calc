@@ -1,46 +1,26 @@
-# Getting Started with Create React App
+# BAC Calculator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Technologies: React, Typescript, Firebase, Tailwind CSS
+Live Site: https://bac-calc-lc.web.app/
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+This application calculates your blood alcohol content (BAC) based on the following inputs: weight, gender, fluid ounces and alcohol by volume (ABV).
 
-### `npm start`
+The first entry logs the initial time that the drinking session began. This is so that the BAC calculation can also take into account elapsed time.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Each drink entry will be logged in a table as well as add to a total drink count.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+There is no backend, so no data is stored, and the page will reset once refreshed.
 
-### `npm test`
+## Ideal Future Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Buttons for common alcoholic beverages which would replace manual data entry
+- Data persistence to avoid data erasure when page is refreshed
+- Readable time formats such as specifying minutes in addition to hours (0.5 hours -> 30 minutes)
+- Drink table would show latest drink at the top and populate in descending order of time
+- Convert to phone application instead of running in browser
 
-### `npm run build`
+## Home Page
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Home Page](./README-imgs/home.png)
